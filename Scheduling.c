@@ -27,3 +27,35 @@ void main()
 
 	printf("Enter the number of process:-\t");
 	scanf("%d",&n);
+	ptr=(struct process*)malloc(n*sizeof(struct process));
+	ready=(struct process*)malloc(n*sizeof(struct process));
+	set_to_zero();
+	for(i=0;i<n;i++)
+	{
+		printf("\np%d:- ",i+1);
+		printf("arrival time:-\t");
+		scanf("\n%d",&(ptr+i)->arrival_time);
+		printf("burst time:-\t");
+		scanf("%d",&(ptr+i)->burst_time);
+	}
+	calculate_priority();
+	for(i=0;i<n;i++)
+	{
+		calculate_ready_queue();
+		process_execute();
+		calculate_waiting_time();
+		calculate_priority();
+
+	}
+	calculate_turn_around();
+	show();
+}
+
+
+
+
+void calculate_ready_queue()
+{
+	int j,i,k;
+	rp=0;
+	k=0;
