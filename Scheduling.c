@@ -59,3 +59,49 @@ void calculate_ready_queue()
 	int j,i,k;
 	rp=0;
 	k=0;
+	for(j=0;j<n;j++)
+	{
+		if(((ptr+j)->arrival_time<=total_time)&&(ptr+j)->finished==false)
+		{
+			*(ready+(k++))=*(ptr+j);
+			rp++;
+		}
+	}
+}
+void calculate_priority()
+{
+	int j;
+	for(j=0;j<n;j++)
+	{
+		if((ptr+j)->finished==false)
+		{
+			(ptr+j)->priority = (1+ceil((ptr+j)->waiting_time/(ptr+j)->burst_time));
+		}
+	}
+}
+void calculate_waiting_time()
+{
+	int i;
+	for(i=0;i<n;i++)
+	{
+		if(((ptr+i)->arrival_time<total_time)&&(ptr+i)->finished==false)
+		{
+			(ptr+i)->waiting_time = total_time-((ptr+i)->arrival_time);
+		}
+	}
+}
+void set_to_zero()
+{
+	int i;
+	for(i=0;i<n;i++)
+	{
+		(ptr+i)->id=i+1;
+		(ptr+i)->priority=0;
+		(ptr+i)->arrival_time=0;
+		(ptr+i)->burst_time=0;
+		(ptr+i)->waiting_time=0;
+		(ptr+i)->turn_around_time=0;
+		(ptr+i)->finished= false;
+
+	}
+}
