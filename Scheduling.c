@@ -105,3 +105,43 @@ void set_to_zero()
 
 	}
 }
+void show()
+{
+	int i;
+	printf("\nProcess\tArrival Time\tBurst Time\tPriority\tWaiting Time\tTurn Around Time\t Finished");
+	for(i=0;i<n;i++)
+	{
+		printf("\np%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%s",(ptr+i)->id,(ptr+i)->arrival_time,(ptr+i)->burst_time,(ptr+i)->priority,(ptr+i)->waiting_time,(ptr+i)->turn_around_time,(ptr+i)->finished?"true":"false");
+	}
+
+}
+void process_execute()
+{
+	int index,i,max=0;
+	for(i=0;i<rp;i++)
+	{
+		if((ready+i)->priority > max)
+		{
+			max=(ready+i)->priority;
+			index=i;
+		}
+
+	}
+	if(max!=0)
+	{
+		int p_id=(ready+index)->id;
+		printf("\np%d Executing\n",p_id);
+		total_time=total_time+(ready+index)->burst_time;
+		((ptr+p_id)-1)->finished=true;
+		printf("\nTotal_time=%d",total_time);
+	}
+}
+void calculate_turn_around()
+{
+	int j;
+	for(j=0;j<n;j++)
+	{
+		(ptr+j)->turn_around_time = (ptr+j)->waiting_time+(ptr+j)->burst_time;
+
+	}
+}
